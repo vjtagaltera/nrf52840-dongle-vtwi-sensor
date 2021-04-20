@@ -1,0 +1,17 @@
+
+create the project directory
+
+    ~/nRF5_SDK_17.0.2_d674dde/examples/peripheral
+    $ cp -a twi_sensor vtwi_sensor
+    $ cd vtwi_sensor/
+    $ touch readme-source
+
+    $ ls -F
+    hex/  main.c*  pca10040/  pca10056/  readme-source  twi_sensor.eww*
+
+    $ rm hex/*.hex twi_sensor.eww
+    $ rm -r pca10040
+
+    $ cp -a pca10056 pca10059
+    $ mv pca10056 pca10056-ref
+

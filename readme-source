@@ -15,3 +15,8 @@ create the project directory
     $ cp -a pca10056 pca10059
     $ mv pca10056 pca10056-ref
 
+  rename twi_sensor to vtwi_sensor:
+    $ cd pca10059/blank/ses
+    $ git mv twi_sensor_pca10056.emProject vtwi_sensor_pca10059.emProject
+    $ git mv twi_sensor_pca10056.emSession vtwi_sensor_pca10059.emSession
+

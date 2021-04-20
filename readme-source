@@ -20,3 +20,4 @@ create the project directory
     $ git mv twi_sensor_pca10056.emProject vtwi_sensor_pca10059.emProject
     $ git mv twi_sensor_pca10056.emSession vtwi_sensor_pca10059.emSession
 
+  change in files renamed project name. change BOARD_PCA10056 to BOARD_PCA10059 in files.

@@ -73,6 +73,9 @@
 /* Mode for LM75B. */
 #define NORMAL_MODE 0U
 
+#define ARDUINO_SCL_PIN  (31)
+#define ARDUINO_SDA_PIN  (29)
+
 /* Indicates if operation on TWI has ended. */
 static volatile bool m_xfer_done = false;
 
@@ -91,6 +94,7 @@ void LM75B_set_mode(void)
 
     /* Writing to LM75B_REG_CONF "0" set temperature sensor in NORMAL mode. */
     uint8_t reg[2] = {LM75B_REG_CONF, NORMAL_MODE};
+    m_xfer_done = false;
     err_code = nrf_drv_twi_tx(&m_twi, LM75B_ADDR, reg, sizeof(reg), false);
     APP_ERROR_CHECK(err_code);
     while (m_xfer_done == false);
@@ -110,7 +114,8 @@ void LM75B_set_mode(void)
  */
 __STATIC_INLINE void data_handler(uint8_t temp)
 {
-    NRF_LOG_INFO("Temperature: %d Celsius degrees.", temp);
+    static uint32_t count = 0;
+    NRF_LOG_INFO("Temperature: %d Celsius degrees. count %u.", temp, ++count);
 }
 
 /**
@@ -128,6 +133,7 @@ void twi_handler(nrf_drv_twi_evt_t const * p_event, void * p_context)
             m_xfer_done = true;
             break;
         default:
+            NRF_LOG_WARNING("TWI event unknown type %d", p_event->type);
             break;
     }
 }
@@ -177,6 +183,8 @@ int main(void)
     NRF_LOG_FLUSH();
     twi_init();
     LM75B_set_mode();
+    NRF_LOG_INFO("TWI sensor mode set.");
+    NRF_LOG_FLUSH();
 
     while (true)
     {
